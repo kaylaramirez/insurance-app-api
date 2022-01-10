@@ -4,10 +4,12 @@ from rest_framework.permissions import IsAuthenticated
 
 from quote.models import Quote
 
-from quote.serializers import QuoteSerializer
+from quote.serializers import QuoteSerializer, QuoteDetailsSerializer
 
 
-class QuoteViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
+class QuoteViewSet(viewsets.GenericViewSet,
+                   mixins.CreateModelMixin,
+                   mixins.RetrieveModelMixin):
     """Manage quotes in the database"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -16,3 +18,11 @@ class QuoteViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_serializer_class(self):
+        """ Return QueryDetailSerializer """
+
+        if self.action == 'retrieve':
+            return QuoteDetailsSerializer
+        else:
+            return QuoteSerializer

@@ -35,7 +35,7 @@ class QuoteSerializer(serializers.ModelSerializer):
             'property_owner',
             'address',
         )
-        read_only_fields = ('id',)
+        read_only_fields = ('id', 'quote_id')
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
@@ -44,3 +44,27 @@ class QuoteSerializer(serializers.ModelSerializer):
         quote = Quote.objects.create(address=address, **validated_data)
 
         return quote
+
+
+class QuoteDetailsSerializer(serializers.ModelSerializer):
+    """Serialize a quote detail"""
+    term_premium = serializers.ReadOnlyField()
+    monthly_premium = serializers.ReadOnlyField()
+    total_additional_fees = serializers.ReadOnlyField()
+    total_monthly_fees = serializers.ReadOnlyField()
+    total_discounts = serializers.ReadOnlyField()
+    total_monthly_discounts = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Quote
+        fields = (
+            'id',
+            'term_premium',
+            'monthly_premium',
+            'total_additional_fees',
+            'total_monthly_fees',
+            'total_discounts',
+            'total_monthly_discounts',
+        )
+
+    read_only_fields = ('id')
