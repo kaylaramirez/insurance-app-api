@@ -6,8 +6,6 @@ from django.conf import settings
 class Address(models.Model):
     """Address for a quote"""
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
     street_address_1 = models.CharField(max_length=255)
     street_address_2 = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=255)
@@ -29,7 +27,7 @@ class Quote(models.Model):
     previous_policy_cancelled = models.BooleanField(default=False)
     miles_to_volcano = models.IntegerField()
     property_owner = models.BooleanField(default=False)
-    property_address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.quote_id

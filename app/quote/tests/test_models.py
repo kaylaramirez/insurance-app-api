@@ -15,7 +15,7 @@ class ModelsTests(TestCase):
     def test_address_str(self):
         """Test the address string representation"""
         address = models.Address.objects.create(
-            user=self.user,
+            # user=self.user,
             street_address_1='7744 Northcross Drive',
             street_address_2='N146',
             city='Austin',
@@ -29,7 +29,7 @@ class ModelsTests(TestCase):
         """Test the quote string representation"""
 
         address = models.Address.objects.create(
-            user=self.user,
+            # user=self.user,
             street_address_1='7744 Northcross Drive',
             street_address_2='N146',
             city='Austin',
@@ -44,7 +44,7 @@ class ModelsTests(TestCase):
             previous_policy_cancelled=False,
             miles_to_volcano=50,
             property_owner=False,
-            property_address=address,
+            address=address,
         )
 
         self.assertEqual(len(str(quote)), 10)

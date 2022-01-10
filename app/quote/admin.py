@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from quote import models
+
+admin.site.register(models.Quote)
+admin.site.register(models.Address)
