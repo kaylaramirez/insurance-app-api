@@ -12,7 +12,6 @@ from quote.serializers import QuoteDetailsSerializer
 QUOTE_URL = reverse('quote:quote-list')
 
 TEST_QUOTE = {
-    'quote_id': 'ABCDE12345',
     'effective_data': None,
     'previous_policy_cancelled': False,
     'miles_to_volcano': 50,
@@ -84,12 +83,10 @@ class QuoteApiTests(TestCase):
         res = self.client.get(QUOTE_URL)
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    """
     def test_create_quote_successful(self):
         '''Test creating a new quote'''
 
         payload = {
-            # 'quote_id': 'ABCDE12345',
             'effective_data': None,
             'previous_policy_cancelled': False,
             'miles_to_volcano': 50,
@@ -104,12 +101,6 @@ class QuoteApiTests(TestCase):
         }
         res = self.client.post(QUOTE_URL, payload, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-
-        exists = Quote.objects.filter(
-            user=self.user,
-            quote_id=payload['quote_id']).exists()
-        self.assertTrue(exists)
-    """
 
     def test_create_quote_invalid_address(self):
         """Test creating a quote with invalid address"""
@@ -138,9 +129,16 @@ class QuoteApiTests(TestCase):
 
         quote = sample_quote(user=self.user)
 
-        url = detail_url(quote.id)
+        url = detail_url(quote.quote_id)
         res = self.client.get(url)
 
         serializer = QuoteDetailsSerializer(quote)
-        print(res.data)
         self.assertEqual(res.data, serializer.data)
+
+    def test_view_quote_details_has_prop(self):
+        """Test quote_details had a prop"""
+        quote = sample_quote(user=self.user)
+
+        url = detail_url(quote.quote_id)
+        res = self.client.get(url)
+        self.assertIn('term_premium', res.data)

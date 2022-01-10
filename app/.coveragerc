@@ -1,0 +1,7 @@
+[run]
+source = ./omit = */tests/*, */settings/*, manage.py, *settings.py
+data_file = .coverage
+branch = true
+
+[report]
+show_missing = True

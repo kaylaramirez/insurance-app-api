@@ -2,18 +2,26 @@ import string
 import random
 
 from django.db import models
+from django.core.exceptions import ValidationError
+
+from django.utils.translation import gettext_lazy as _
 
 from django.conf import settings
 
 from django.core.validators import MinLengthValidator
 
-from quote.constants import BASE_RATE, \
+from quote.constants import BASE_RATE, STATE_CODES, \
                             PREV_POLICY_CANCELLED_FEE_AMT, \
                             STATE_FEE_AMT, \
                             MILES_0_100_FEE_AMT, MILES_101_200_FEE_AMT, \
                             MILES_201_500_FEE_AMT,\
                             NO_PREV_POLICY_CANCELLED_DIS_AMT, \
                             PROPERTY_OWNER_DIS_AMT, STATES_WITH_VOLCANOES
+
+
+def validate_state_code(value):
+    if value not in STATE_CODES:
+        raise ValidationError(_(f'Invalid state code. {value}'))
 
 
 class Address(models.Model):
@@ -23,7 +31,7 @@ class Address(models.Model):
     street_address_2 = models.CharField(max_length=255, blank=True,
                                         null=True)
     city = models.CharField(max_length=255)
-    state = models.CharField(max_length=2,)
+    state = models.CharField(max_length=2, validators=[validate_state_code])
     zipcode = models.CharField(max_length=5,)
 
     def __str__(self):

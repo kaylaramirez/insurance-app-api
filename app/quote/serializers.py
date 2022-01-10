@@ -50,21 +50,22 @@ class QuoteDetailsSerializer(serializers.ModelSerializer):
     """Serialize a quote detail"""
     term_premium = serializers.ReadOnlyField()
     monthly_premium = serializers.ReadOnlyField()
-    total_additional_fees = serializers.ReadOnlyField()
-    total_monthly_fees = serializers.ReadOnlyField()
+    total_fees = serializers.ReadOnlyField()
+    monthly_fees = serializers.ReadOnlyField()
     total_discounts = serializers.ReadOnlyField()
-    total_monthly_discounts = serializers.ReadOnlyField()
+    monthly_discounts = serializers.ReadOnlyField()
 
     class Meta:
         model = Quote
         fields = (
             'id',
+            'quote_id',
             'term_premium',
             'monthly_premium',
-            'total_additional_fees',
-            'total_monthly_fees',
+            'total_fees',
+            'monthly_fees',
             'total_discounts',
-            'total_monthly_discounts',
+            'monthly_discounts',
         )
 
     read_only_fields = ('id')

@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 
 from quote import models
+from quote.models import validate_state_code
 
 
 class ModelsTests(TestCase):
@@ -25,7 +27,32 @@ class ModelsTests(TestCase):
         str_add = '7744 Northcross Drive N146, Austin, TX 78757'
         self.assertEqual(str(address), str_add)
 
-    def test_quote_id_generated(self):
+    def test_address_state_code_str(self):
+        """Test the address state field validation"""
+        self.assertRaises(ValidationError, validate_state_code, 'ZZ')
+
+    def test_quote_generator(self):
+        address = models.Address.objects.create(
+            street_address_1='7744 Northcross Drive',
+            street_address_2='N146',
+            city='Austin',
+            state='TX',
+            zipcode='78757'
+        )
+
+        quote = models.Quote.objects.create(
+            user=self.user,
+            effective_data=None,
+            previous_policy_cancelled=False,
+            miles_to_volcano=50,
+            property_owner=False,
+            address=address,
+        )
+
+        q_id = quote.generate_quote_id()
+        self.assertEqual(q_id.isalnum(), True)
+
+    def test_quote_generated_id_set(self):
         """Test the quote string representation"""
 
         address = models.Address.objects.create(
