@@ -7,9 +7,9 @@ Project for creating and checking out Volcano Insurance.
 This project has two endpoints and it uses TokenAuthentication. User must be authenticated to make both requests.
 You can createasuperuser then assign it a token to user.
 
-##Endpoints
+## Endpoints
 
-###Create a Quote
+### Create a Quote
 POST: /api/quote/CREATE/
 
 Payload = {
@@ -26,7 +26,7 @@ Payload = {
         "zipcode": "78415"
     }
 
-###Checkout a quote
+### Checkout a quote
 /api/quote/{{quote_id}}/
 
 Response = {
@@ -46,16 +46,16 @@ This project is wired up to work with Docker. You aren't required to use it,
 but it can make things easier. The instructions in the next sections will 
 include instructions for both Docker
 
-###Running the Server
+### Running the Server
 
 Setup:
    a. Run docker-compose build inside your local repo (if not already built)
    b. Run docker-compose run
 
-###Running Test and Linting Code
+### Running Test and Linting Code
 - Run docker-compose run --rm app sh -c "python manage.py test && flake8"
   - This project uses Travis CL 
 
-###Running a django command
+### Running a django command
 - Run docker-compose run --rm app sh -c "<command to run>" 
   - ex: docker-compose run --rm app sh -c makemigrations 
