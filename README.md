@@ -13,31 +13,31 @@ You can createasuperuser then assign it a token to user.
 POST: /api/quote/CREATE/
 
 Payload = {
-* "effective_data": null,
-* "previous_policy_cancelled": true,
-* "miles_to_volcano": 25,
-* "property_owner": true,
-* "address": {
-   - "id": 2,
-   - "street_address_1": "2909 Santa Lucia St",
-   - "street_address_2": "",
-   - "city": "Corpus Christi",
-   - "state": "TX",
-   - "zipcode": "78415"
--}
+"effective_data": null,
+"previous_policy_cancelled": true,
+"miles_to_volcano": 25,
+"property_owner": true,
+"address": {
+   "id": 2,
+   "street_address_1": "2909 Santa Lucia St",
+   "street_address_2": "",
+   "city": "Corpus Christi",
+   "state": "TX",
+   "zipcode": "78415"
+}
 
 ### Checkout a quote
 GET: /api/quote/{{quote_id}}/
 
 Response = {
-    - "id": 2,
-    - "quote_id": "9MJ66UKEFA",
-    - "term_premium": 107.892,
-    - "monthly_premium": 17.982,
-    - "total_fees": 59.94,
-    - "monthly_fees": 9.99,
-    - "total_discounts": 11.988,
-    - "monthly_discounts": 1.998
+    "id": 2,
+    "quote_id": "9MJ66UKEFA",
+    "term_premium": 107.892,
+    "monthly_premium": 17.982,
+    "total_fees": 59.94,
+    "monthly_fees": 9.99,
+    "total_discounts": 11.988,
+    "monthly_discounts": 1.998
 }
 
 ### Disclaimer:
